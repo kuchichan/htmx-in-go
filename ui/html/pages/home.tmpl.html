@@ -1,0 +1,18 @@
+{{define "main"}}
+<table>
+  <tr>
+    <th>ID:</th>
+    <th>Ticker:</th>
+    <th>Price:</th>
+    <th>Quantity</th>
+  </tr>
+  {{range .StockAssets}} 
+    <tr>
+      <td>{{.ID}}</td>
+      <td>{{.Ticker}}</td>
+      <td>{{.Price}}</td>
+      <td>{{.Quantity}}</td>
+    </tr>
+    {{end}}
+</table>
+{{end}}

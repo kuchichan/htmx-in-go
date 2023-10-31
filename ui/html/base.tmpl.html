@@ -1,0 +1,14 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Foliage</title>
+</head>
+<body>
+  <h1>no Witam {{.Hello}}</h1>
+  {{ template "main" . }} 
+</body>
+</html>
+
+{{ end }}

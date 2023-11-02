@@ -1,18 +1,47 @@
 {{define "main"}}
-<table>
-  <tr>
-    <th>ID:</th>
-    <th>Ticker:</th>
-    <th>Price:</th>
-    <th>Quantity</th>
-  </tr>
-  {{range .StockAssets}} 
-    <tr>
-      <td>{{.ID}}</td>
-      <td>{{.Ticker}}</td>
-      <td>{{.Price}}</td>
-      <td>{{.Quantity}}</td>
-    </tr>
-    {{end}}
-</table>
+<div class="columns-2 space-x-2">
+  <div class="w-full relative shadow-md overflow-x-auto sm:rounded-md my-2 mx-2">
+    <table class="table auto w-full text-sm text-left text-gray-500 dark:text-gray-400 break-inside-avoid">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-2">ID:</th>
+          <th scope="col" class="px-6 py-2">Ticker:</th>
+          <th scope="col" class="px-6 py-2">Price:</th>
+          <th scope="col" class="px-6 py-2">Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range .StockAssets}} 
+        <tr class="border-b border-gray-200 dark:border-gray-700 dark:bg-slate-300">
+          <td class="px-6 py-3">{{.ID}}</td>
+          <td class="px-6 py-3">{{.Ticker}}</td>
+          <td class="px-6 py-3">{{.Price}}</td>
+          <td class="px-6 py-3">{{.Quantity}}</td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+  <div class="py-2 px-2 max-w-sm break-inside-avoid-column">
+    <div class="shadow-md sm:rounded-md dark:bg-slate-300">
+      <form action="" class="rounded px-8 pt-2 pb-2 mb-4">
+        <div class="mb-3">
+          <label for="ticker" class="text-gray-500 text-sm font-bold mb-2">Ticker</label>
+          <input type="text" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="ticker" id="asset-ticker" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="quantity" class="text-gray-500 text-sm font-bold mb-2">Quantity</label>
+          <input type="number" name="quantity" id="asset-quantity" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        <div class="mb-3">
+          <label for="price" class="text-gray-500 text-sm font-bold mb-2">Price</label>
+          <input type="number" name="price" id="asset-price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          Add stock 
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
 {{end}}

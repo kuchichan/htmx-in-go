@@ -1,14 +1,16 @@
 {{ define "base" }}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Foliage</title>
-</head>
-<body>
-  <h1>no Witam {{.Hello}}</h1>
-  {{ template "main" . }} 
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Foliage</title>
+  </head>
+  <body>
+    <div class="dark:bg-slate-200 md:rounded-lg">
+      <h1 class="text-center text-3xl font-bold w-full">Foliage</h1>
+      {{ template "main" . }} 
+    </div>
+  </body>
+  <script src="https://cdn.tailwindcss.com"></script>
 </html>
-
 {{ end }}

@@ -10,7 +10,7 @@
           <th scope="col" class="px-6 py-2">Quantity</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="asset-lists">
         {{range .StockAssets}} 
         <tr class="border-b border-gray-200 dark:border-gray-700 dark:bg-slate-300">
           <td class="px-6 py-3">{{.ID}}</td>
@@ -24,7 +24,7 @@
   </div>
   <div class="py-2 px-2 max-w-sm break-inside-avoid-column">
     <div class="shadow-md sm:rounded-md dark:bg-slate-300">
-      <form action="" class="rounded px-8 pt-2 pb-2 mb-4">
+      <form hx-post="/assets/" hx-target="#asset-lists" hx-swap="beforeend" hx-indicator="#spinner" class="rounded px-8 pt-2 pb-2 mb-4">
         <div class="mb-3">
           <label for="ticker" class="text-gray-500 text-sm font-bold mb-2">Ticker</label>
           <input type="text" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="ticker" id="asset-ticker" class="form-control">
@@ -37,7 +37,10 @@
           <label for="price" class="text-gray-500 text-sm font-bold mb-2">Price</label>
           <input type="number" name="price" id="asset-price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+        <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+          <span id="spinner" class="items-center justify-center htmx-indicator bg-gradient-to-tr from-sky-200 to-pink-600 inline-flex animate-spin h-5 w-5 mr-2 rounded-full">
+            <span class="w-3 h-3 rounded-full bg-indigo-500"></span>
+          </span>
           Add stock 
         </button>
       </form>

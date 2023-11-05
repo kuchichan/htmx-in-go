@@ -1,12 +1,11 @@
 package main
 
 import (
-	"html/template"
 	"log"
 	"net/http"
-	"strconv"
 	"time"
 
+	"github.com/go-playground/form/v4"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -29,59 +28,18 @@ type StockRepo struct {
 
 type application struct {
 	stockRepo *StockRepo
-}
-
-func (application *application) home(w http.ResponseWriter, r *http.Request) {
-	pattern := []string{
-		"./ui/html/base.tmpl.html",
-		"./ui/html/pages/home.tmpl.html",
-	}
-	ts, err := template.ParseFiles(pattern...)
-	if err != nil {
-		log.Print(err.Error())
-		http.Error(w, "Internal Server error", http.StatusInternalServerError)
-		return
-	}
-
-	err = ts.ExecuteTemplate(w, "base", &TemplateData{Hello: "hehe", StockAssets: application.stockRepo.stockAssets})
-	if err != nil {
-		log.Print(err.Error())
-		http.Error(w, "Internal Server error", http.StatusInternalServerError)
-	}
-}
-
-func (application *application) assets(w http.ResponseWriter, r *http.Request) {
-	quantity, _ := strconv.Atoi(r.PostFormValue("quantity"))
-	price, _ := strconv.Atoi(r.PostFormValue("price"))
-	ticker := r.PostFormValue("ticker")
-	if quantity == 0 || price == 0 || ticker == "" {
-		return
-	}
-
-	asset := application.stockRepo.insert(ticker, quantity, price)
-
-	ts, err := template.ParseFiles("./ui/html/partials/asset-row.tmpl.html")
-	if err != nil {
-		log.Print(err.Error())
-		http.Error(w, "Internal Server error", http.StatusInternalServerError)
-		return
-	}
-
-	err = ts.ExecuteTemplate(w, "asset-row", &asset)
-	if err != nil {
-		log.Print(err.Error())
-		http.Error(w, "Internal Server error", http.StatusInternalServerError)
-	}
+	decoder   *form.Decoder
 }
 
 func main() {
 	router := httprouter.New()
 	app := &application{
 		stockRepo: initStockAssets(),
+		decoder: form.NewDecoder(),
 	}
 
 	router.HandlerFunc(http.MethodGet, "/", app.home)
-	router.HandlerFunc(http.MethodPost, "/assets/", app.assets)
+	router.HandlerFunc(http.MethodPost, "/assets/", app.assetsCreate)
 
 	server := &http.Server{
 		Addr:    ":4000",

@@ -24,7 +24,7 @@ func (application *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = ts.ExecuteTemplate(w, "base", &TemplateData{Hello: "hehe", StockAssets: application.stockRepo.stockAssets})
+	err = ts.ExecuteTemplate(w, "base", &TemplateData{StockAssets: application.stockRepo.stockAssets})
 	if err != nil {
 		log.Print(err.Error())
 		http.Error(w, "Internal Server error", http.StatusInternalServerError)
